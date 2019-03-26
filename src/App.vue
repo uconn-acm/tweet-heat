@@ -1,38 +1,47 @@
 <template>
-  <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-toolbar>
+	<v-app>
+		<v-toolbar app>
+			<v-toolbar-title class="headline text-uppercase">
+				<span>Tweet</span>
+				<span class="font-weight-light">Heat</span>
+			</v-toolbar-title>
+		</v-toolbar>
 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-  </v-app>
+		<v-content>
+			<v-sparkline
+				v-for="data in value"
+				auto-draw
+				:auto-draw-duration="1000"
+				:gradient="gradient"
+				:key="data[0]"
+				:smooth="16"
+				:value="data"
+			/>
+
+			<v-btn @click="addData">Add graph</v-btn>
+		</v-content>
+	</v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  },
-  data () {
-    return {
-      //
-    }
-  }
-}
+	name: 'App',
+	mounted() {
+		setInterval(() => this.addData(), 5000);
+	},
+
+	data() {
+		return {
+			value: [[0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]],
+			gradient: ['#00c6ff', '#F0F', '#FF0']
+		};
+	},
+
+	methods: {
+		addData() {
+			this.value[0].shift();
+			this.value[0].push(3);
+		}
+	}
+};
 </script>
