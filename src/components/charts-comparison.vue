@@ -1,5 +1,5 @@
 <template>
-	<v-card dark hover class="mx-auto pa-3" color="green" width="450">
+	<v-card dark hover class="mx-auto pa-3" color="blue" width="450">
 		<stock-chart :data="twitterData" title="Twitter" />
 		<stock-chart :data="marketData" title="Market" />
 
