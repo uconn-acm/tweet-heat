@@ -8,39 +8,43 @@
 		</v-toolbar>
 
 		<v-content>
-			<v-sparkline
-				v-for="data in value"
-				auto-draw
-				:auto-draw-duration="1000"
-				:gradient="gradient"
-				:key="data[0]"
-				:smooth="16"
-				:value="data"
-			/>
-
-			<v-btn @click="addData">Add graph</v-btn>
+			<v-container fluid>
+				<charts-comparison
+					:twitterData="twitterData"
+					:marketData="marketData"
+				/>
+			</v-container>
 		</v-content>
 	</v-app>
 </template>
 
 <script>
+import ChartsComparison from './components/charts-comparison.vue';
+
 export default {
 	name: 'App',
+
+	components: {
+		ChartsComparison
+	},
+
 	mounted() {
-		setInterval(() => this.addData(), 5000);
+		setInterval(() => this.updateData(), 1000);
 	},
 
 	data() {
 		return {
-			value: [[0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]],
-			gradient: ['#00c6ff', '#F0F', '#FF0']
+			twitterData: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
+			marketData: [0, 3, 7, 3, 7, 4, 9, 5, 8, 5, 3, 2, 2, 2, 5, 2]
 		};
 	},
 
 	methods: {
-		addData() {
-			this.value[0].shift();
-			this.value[0].push(3);
+		updateData() {
+			this.twitterData.shift();
+			this.twitterData.push(Math.floor(Math.random() * 10));
+			this.marketData.shift();
+			this.marketData.push(Math.floor(Math.random() * 10));
 		}
 	}
 };
